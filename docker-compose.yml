@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  glint-postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    container_name: glint-postgres
+    environment:
+      - POSTGRES_PASSWORD=harshal
+      - PG_DATA=/data/postgres-glint
+    volumes:
+      - postgres-glint:/data/postgres-glint
+
+volumes:
+  postgres-glint:
