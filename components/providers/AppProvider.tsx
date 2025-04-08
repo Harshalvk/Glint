@@ -1,12 +1,13 @@
 import React from "react";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "./ThemeProvider";
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
       {children}
       <Toaster />
-    </div>
+    </ThemeProvider>
   );
 };
 
