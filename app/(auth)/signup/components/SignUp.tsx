@@ -63,7 +63,7 @@ const SignIn = () => {
           <Button
             variant={"outline"}
             className="rounded-full"
-            onClick={() => signIn("github", { redirectTo: "/dashborad" })}
+            onClick={() => signIn("github", { redirectTo: "/dashboard" })}
           >
             <GitHubIcon />
             Sign up with GitHub
@@ -71,7 +71,7 @@ const SignIn = () => {
           <Button
             variant={"outline"}
             className="rounded-full"
-            onClick={() => signIn("google", { redirectTo: "/dashborad" })}
+            onClick={() => signIn("google", { redirectTo: "/dashboard" })}
           >
             <GoogleIcon />
             Sign up with Google

@@ -34,7 +34,7 @@ const SignIn = () => {
   const onSubmit = async (values: z.infer<typeof signInSchema>) => {
     const res = await signIn("credentials", {
       ...values,
-      redirectTo: "/dashborad",
+      redirectTo: "/dashboard",
     });
 
     if (res?.error) {
@@ -65,7 +65,7 @@ const SignIn = () => {
           <Button
             variant={"outline"}
             className="rounded-full"
-            onClick={() => signIn("github", { redirectTo: "/dashborad" })}
+            onClick={() => signIn("github", { redirectTo: "/dashboard" })}
           >
             <GitHubIcon />
             Sign in with GitHub
@@ -73,7 +73,7 @@ const SignIn = () => {
           <Button
             variant={"outline"}
             className="rounded-full"
-            onClick={() => signIn("google", { redirectTo: "/dashborad" })}
+            onClick={() => signIn("google", { redirectTo: "/dashboard" })}
           >
             <GoogleIcon />
             Sign in with Google
