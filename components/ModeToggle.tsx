@@ -13,7 +13,7 @@ const ModeToggle = () => {
       <TabsList className="rounded-full">
         <TabsTrigger
           value="light"
-          className="rounded-full"
+          className="rounded-full text-xs"
           onClick={() => setTheme("light")}
         >
           <Sun />
