@@ -124,7 +124,7 @@ const SignIn = () => {
               )}
             />
             <Button
-              className="w-full rounded-full bg-gradient-to-t from-zinc-950 via-zinc-700 to-zinc-800"
+              className="w-full rounded-full bg-gradient-to-t from-zinc-950 dark:from-zinc-950 via-zinc-800 dark:via-zinc-900 to-zinc-800 dark:to-zinc-950 dark:text-white border cursor-pointer"
               type="submit"
             >
               Sign up
