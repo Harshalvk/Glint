@@ -3,8 +3,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import Dropzone from "./Dropzone";
 import Styles from "./Styles";
-import { Loader } from "lucide-react";
+import { ArrowLeft, Loader } from "lucide-react";
 import { removeBackground } from "@imgly/background-removal";
+import { Button } from "@/components/ui/button";
+
+const presets = {
+  style1: {
+    fontSize: 100,
+    fontWeight: "bold",
+    color: "rgba(255, 255, 255, 1)",
+    opacity: 1,
+  },
+  style2: {
+    fontSize: 100,
+    fontWeight: "bold",
+    color: "rgba(0, 0, 0, 1)",
+    opacity: 1,
+  },
+  style3: {
+    fontSize: 100,
+    fontWeight: "bold",
+    color: "rgba(255, 255, 255, 0.8)",
+    opacity: 0.8,
+  },
+};
 
 const ThumbnailCreator = () => {
   const [selectedStyle, setSelectedStyle] = useState("style1");
@@ -57,6 +79,17 @@ const ThumbnailCreator = () => {
       canvas.height = bgImg.height;
 
       ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+
+      let preset = presets.style1;
+      switch (selectedStyle) {
+        case "style2":
+          preset = presets.style2;
+          break;
+        case "style3":
+          preset = presets.style3;
+          break;
+      }
+
       ctx.save();
 
       //calculate font size to fill image 90% of the canvas
@@ -65,15 +98,15 @@ const ThumbnailCreator = () => {
 
       let fontSize = 100;
       let selectedFont = "Arial";
-      ctx.font = `${"bold"} ${fontSize}px ${selectedFont}`;
+      ctx.font = `${preset.fontWeight} ${fontSize}px ${selectedFont}`;
       const textWidth = ctx.measureText(text).width;
       const targetWidht = canvas.width * 0.9;
 
       fontSize *= targetWidht / textWidth;
       ctx.font = `${"bold"} ${fontSize}px ${selectedFont}`;
 
-      ctx.fillStyle = "rgba(255, 255, 255, 1)";
-      ctx.globalAlpha = 1;
+      ctx.fillStyle = preset.color;
+      ctx.globalAlpha = preset.opacity;
 
       const x = canvas.width / 2;
       const y = canvas.width / 2;
@@ -93,6 +126,15 @@ const ThumbnailCreator = () => {
     bgImg.src = imageSrc;
   };
 
+  const handleDownload = async () => {
+    if (canvasRef.current) {
+      const link = document.createElement("a");
+      link.download = "image.png";
+      link.href = canvasRef.current.toDataURL();
+      link.click();
+    }
+  };
+
   return (
     <>
       {imageSrc ? (
@@ -105,10 +147,30 @@ const ThumbnailCreator = () => {
               />
             </div>
           ) : (
-            <canvas
-              ref={canvasRef}
-              className="max-h-lg h-auto w-full max-w-lg rounded-md"
-            ></canvas>
+            <div className="my-4 flex w-full flex-col items-center gap-3">
+              <Button
+                variant={"link"}
+                className="rounded-full self-start group"
+                onClick={() => {
+                  setImageSrc(null);
+                  setProcessedImageUrl(null);
+                  setCanvasReady(false);
+                }}
+              >
+                <ArrowLeft className="translate-x-0.5 group-hover:-translate-x-0.5 transition-all duration-200" />
+                <span className="leading-7">Go back</span>
+              </Button>
+              <canvas
+                ref={canvasRef}
+                className="max-h-lg h-auto w-full max-w-lg rounded-md"
+              ></canvas>
+              <Button
+                className="rounded-full border w-full"
+                onClick={() => handleDownload()}
+              >
+                Download
+              </Button>
+            </div>
           )}
         </>
       ) : (
@@ -126,17 +188,17 @@ const ThumbnailCreator = () => {
           </div>
           <div className="mt-10 flex flex-col items-center justify-between gap-10 md:flex-row md:items-start">
             <Styles
-              image="/styletest.png"
+              image="/styl1.png"
               selectStyle={() => setSelectedStyle("style1")}
               isSelected={selectedStyle === "style1"}
             />
             <Styles
-              image="/styletest.png"
+              image="/styl2.png"
               selectStyle={() => setSelectedStyle("style2")}
               isSelected={selectedStyle === "style2"}
             />
             <Styles
-              image="/styletest.png"
+              image="/styl3.png"
               selectStyle={() => setSelectedStyle("style3")}
               isSelected={selectedStyle === "style3"}
             />
