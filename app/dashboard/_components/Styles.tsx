@@ -21,12 +21,12 @@ const Styles = ({
     >
       {(mouseOver || isSelected) && (
         <>
-          <div className="absolute border-t border-black h-4 w-4 -right-6 -top-4 -rotate-45"></div>
-          <div className="absolute border-t border-black h-4 w-4 -right-3 -top-6 rotate-[-75deg]"></div>
-          <div className="absolute border-t border-black h-4 w-4 -right-7 -top-0 rotate-[-20deg]"></div>
-          <div className="absolute border-t border-black h-4 w-4 -bottom-6 -left-4 -rotate-45"></div>
-          <div className="absolute border-t border-black h-4 w-4 -bottom-7 -left-0 rotate-[-75deg]"></div>
-          <div className="absolute border-t border-black h-4 w-4 -bottom-3 -left-6 rotate-[-20deg]"></div>
+          <div className="absolute border-t dark:border-white border-black h-4 w-4 -right-6 -top-4 -rotate-45"></div>
+          <div className="absolute border-t dark:border-white border-black h-4 w-4 -right-3 -top-6 rotate-[-75deg]"></div>
+          <div className="absolute border-t dark:border-white border-black h-4 w-4 -right-7 -top-0 rotate-[-20deg]"></div>
+          <div className="absolute border-t dark:border-white border-black h-4 w-4 -bottom-6 -left-4 -rotate-45"></div>
+          <div className="absolute border-t dark:border-white border-black h-4 w-4 -bottom-7 -left-0 rotate-[-75deg]"></div>
+          <div className="absolute border-t dark:border-white border-black h-4 w-4 -bottom-3 -left-6 rotate-[-20deg]"></div>
         </>
       )}
       <img className="md:h-30 rounded-lg" src={image} />

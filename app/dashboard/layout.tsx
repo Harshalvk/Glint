@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex items-center gap-3">
           <Credits />
           <Link href={"/dashboard/pricing"}>
-            <Button className="rounded-full" variant={"secondary"}>
+            <Button className="rounded-full border" variant={"secondary"}>
               Buy more
             </Button>
           </Link>
