@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 const SignOutBtn = () => {
   return (
     <Button
-      className="rounded-full"
+      className="rounded-full border"
       variant={"secondary"}
       onClick={() => signOut()}
     >
