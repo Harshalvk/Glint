@@ -3,9 +3,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import Dropzone from "./Dropzone";
 import Styles from "./Styles";
-import { ArrowLeft, Loader } from "lucide-react";
+import { ArrowLeft, FileDown, Loader, Pencil } from "lucide-react";
 import { removeBackground } from "@imgly/background-removal";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { domine, lora, inter, geist } from "../../fonts";
 
 const presets = {
   style1: {
@@ -38,6 +55,7 @@ const ThumbnailCreator = () => {
   const [canvasReady, setCanvasReady] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [text, setText] = useState("POV");
+  const [font, setFont] = useState("arial");
 
   const setSelectedImage = async (file?: File) => {
     if (file) {
@@ -97,7 +115,17 @@ const ThumbnailCreator = () => {
       ctx.textBaseline = "bottom";
 
       let fontSize = 100;
-      let selectedFont = "Arial";
+      let selectedFont = font;
+      switch (font) {
+        case "inter":
+          selectedFont = inter.style.fontFamily;
+        case "domine":
+          selectedFont = domine.style.fontFamily;
+        case "lora":
+          selectedFont = lora.style.fontFamily;
+        case "geist":
+          selectedFont = geist.style.fontFamily;
+      }
       ctx.font = `${preset.fontWeight} ${fontSize}px ${selectedFont}`;
       const textWidth = ctx.measureText(text).width;
       const targetWidht = canvas.width * 0.9;
@@ -147,29 +175,78 @@ const ThumbnailCreator = () => {
               />
             </div>
           ) : (
-            <div className="my-4 flex w-full flex-col items-center gap-3">
-              <Button
-                variant={"link"}
-                className="rounded-full self-start group"
-                onClick={() => {
-                  setImageSrc(null);
-                  setProcessedImageUrl(null);
-                  setCanvasReady(false);
-                }}
-              >
-                <ArrowLeft className="translate-x-0.5 group-hover:-translate-x-0.5 transition-all duration-200" />
-                <span className="leading-7">Go back</span>
-              </Button>
-              <canvas
-                ref={canvasRef}
-                className="max-h-lg h-auto w-full max-w-lg rounded-md"
-              ></canvas>
-              <Button
-                className="rounded-full border w-full"
-                onClick={() => handleDownload()}
-              >
-                Download
-              </Button>
+            <div className="flex flex-col items-center justify-center">
+              <div className="my-4 flex w-full flex-col items-center gap-3">
+                <Button
+                  variant={"link"}
+                  className="rounded-full self-start group"
+                  onClick={() => {
+                    setImageSrc(null);
+                    setProcessedImageUrl(null);
+                    setCanvasReady(false);
+                  }}
+                >
+                  <ArrowLeft className="translate-x-0.5 group-hover:-translate-x-0.5 transition-all duration-200" />
+                  <span className="leading-7">Go back</span>
+                </Button>
+                <canvas
+                  ref={canvasRef}
+                  className="max-h-lg h-auto w-full max-w-lg rounded-md"
+                ></canvas>
+              </div>
+              <Card className="w-full rounded-md">
+                <CardHeader>
+                  <CardTitle>Edit</CardTitle>
+                  <CardContent>
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col gap-1.5">
+                        <Label htmlFor="text">Text</Label>
+                        <Input
+                          value={text}
+                          onChange={(e) => setText(e.target.value)}
+                          id="text"
+                          placeholder="Text in Thumbnail"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <Label htmlFor="font">Font</Label>
+                        <Select
+                          value={font}
+                          onValueChange={(value) => setFont(value)}
+                          defaultValue="arial"
+                        >
+                          <SelectTrigger className="w-full" id="font">
+                            <SelectValue placeholder="Select Font" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="arial">Arial</SelectItem>
+                            <SelectItem value="intern">Intern</SelectItem>
+                            <SelectItem value="domine">Domine</SelectItem>
+                            <SelectItem value="lora">Lora</SelectItem>
+                            <SelectItem value="geist">Geist</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="flex flex-wrap justify-between gap-2 mt-3">
+                    <Button
+                      className="rounded-full border w-full sm:flex-1"
+                      onClick={() => handleDownload()}
+                    >
+                      <FileDown />
+                      Download
+                    </Button>
+                    <Button
+                      className="rounded-full border w-full sm:flex-1"
+                      onClick={drawCompositeImage}
+                    >
+                      <Pencil />
+                      Update
+                    </Button>
+                  </CardFooter>
+                </CardHeader>
+              </Card>
             </div>
           )}
         </>
