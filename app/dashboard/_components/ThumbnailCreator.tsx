@@ -45,7 +45,7 @@ const presets = {
   },
 };
 
-const ThumbnailCreator = () => {
+const ThumbnailCreator = ({ children }: { children: React.ReactNode }) => {
   const [selectedStyle, setSelectedStyle] = useState("style1");
   const [loading, setLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -281,6 +281,9 @@ const ThumbnailCreator = () => {
             />
           </div>
           <Dropzone setSelectedImage={setSelectedImage} />
+          <div className="mt-8">
+            {children}
+          </div>
         </div>
       )}
     </>
